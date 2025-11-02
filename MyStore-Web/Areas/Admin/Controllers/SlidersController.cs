@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyStore_Core.Interfaces;
 using MyStore_Data.Entities;
+using MyStore_Web.Models.ViewModels;
 
 namespace MyStore_Web.Areas.Admin.Controllers
 {
@@ -13,15 +15,20 @@ namespace MyStore_Web.Areas.Admin.Controllers
     public class SlidersController : Controller
     {
         private readonly MyStoreDbContext _context;
+        private readonly ISliderServicess _sliderServicess;
 
-        public SlidersController(MyStoreDbContext context)
+        public SlidersController(MyStoreDbContext context, ISliderServicess sliderServicess)
         {
             _context = context;
+            _sliderServicess = sliderServicess;
         }
 
         // GET: Admin/Sliders
         public async Task<IActionResult> Index()
         {
+
+
+
             return View(await _context.Sliders.ToListAsync());
         }
 
@@ -32,15 +39,26 @@ namespace MyStore_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            var slider = await _context.Sliders
-                .FirstOrDefaultAsync(m => m.SliderId == id);
+            var slider = await _sliderServicess.GetSliderDto((int)id);
             if (slider == null)
             {
                 return NotFound();
             }
 
-            return View(slider);
+            var viewModel = new SliderViewModel()
+            {
+                DiscountTitle = slider.DiscountTitle,
+                Enddate = slider.EndDate,
+                ImageName = slider.ImageName,
+                SliderId = slider.Id,
+                Startdate = slider.StartDate,
+                IsActive = slider.IsActive,
+                Title = slider.Title,
+
+            };
+
+
+            return View(viewModel);
         }
 
         // GET: Admin/Sliders/Create
@@ -134,7 +152,6 @@ namespace MyStore_Web.Areas.Admin.Controllers
             return View(slider);
         }
 
-        // POST: Admin/Sliders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

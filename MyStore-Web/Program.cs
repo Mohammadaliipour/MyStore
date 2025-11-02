@@ -1,5 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using MyStore_Core.Interfaces;
+using MyStore_Core.Mapping_Profiles;
+using MyStore_Core.Servicess;
 using MyStore_Data.Entities;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +15,8 @@ builder.Services.AddDbContext<MyStoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connectionname"));
 });
+builder.Services.AddAutoMapper(typeof(SliderProfile));
+builder.Services.AddScoped<ISliderServicess, SliderServicess>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +33,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
