@@ -1,65 +1,87 @@
-﻿@model IEnumerable<MyStore_Data.Entities.Slider>
-
+﻿@using MyStore_Web.Models.ViewModels
+@model List<SliderViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="breadcrumb">
+    <ul>
+        <li>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">پیشخوان</a>
+        </li>
+        <li>
+            <a asp-area="Admin" asp-controller="Sliders" asp-action="Index" class="is-active">اسلایدشو</a>
+        </li>
+    </ul>
+</div>
+<div class="main-content font-size-13">
+    <div class="tab__box">
+        <div class="tab__items">
+            <a class="tab__item is-active" href="/Admin/Sliders/Index">لیست اسلاید ها</a>
+            <a class="tab__item " href="create-slideshow.html">ایجاد اسلاید جدید</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DiscountTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Startdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Enddate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiscountTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Startdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enddate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SliderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SliderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SliderId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </div>
+    </div>
+    <div class="table__box">
+        <table class="table">
+
+            <thead role="rowgroup">
+                <tr role="row" class="title-row">
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DiscountTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ImageName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Startdate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Enddate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().IsActive)
+                    </th>
+                    <th>
+                        عملیات
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr role="row" class="">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DiscountTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImageName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Startdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Enddate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        <a href="" class="item-delete mlg-15" title="حذف"></a>
+                        <a href="" class="item-reject mlg-15" title="رد"></a>
+                        <a href="" class="item-confirm mlg-15" title="تایید"></a>
+                        <a href="" class="item-edit" title="ویرایش"></a>
+                    </td>
+                </tr>
+               }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

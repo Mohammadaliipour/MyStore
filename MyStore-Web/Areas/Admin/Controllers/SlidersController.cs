@@ -27,9 +27,19 @@ namespace MyStore_Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
 
+            var slierlistDto =  await _sliderServicess.GettAllSlider();
 
-
-            return View(await _context.Sliders.ToListAsync());
+            var ListViewModel = slierlistDto.Select(dto => new SliderViewModel
+            {
+                SliderId = dto.Id,
+                DiscountTitle = dto.DiscountTitle,
+                Title = dto.Title,
+                ImageName = dto.ImageName,
+                Startdate = dto.StartDate,
+                Enddate = dto.EndDate,
+                IsActive = dto.IsActive
+            }).ToList();
+            return View(ListViewModel);
         }
 
         // GET: Admin/Sliders/Details/5

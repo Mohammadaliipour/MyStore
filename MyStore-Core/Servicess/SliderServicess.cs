@@ -21,6 +21,16 @@ namespace MyStore_Core.Servicess
             _mapper = mappe;
         }
 
+        public async Task<List<SliderDto>> GettAllSlider() 
+        {
+            var slider = await _dbcontext.Sliders.ToListAsync();
+            if (slider == null)
+                return null;
+            return _mapper.Map<List<SliderDto>>(slider);
+        
+        }
+
+
         public async Task <SliderDto> GetSliderDto(int id) 
         {
 
@@ -34,6 +44,14 @@ namespace MyStore_Core.Servicess
         
         }
 
+        public Task CreateSlider(SliderEditDto dto)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task EditSlider(SliderEditDto dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
