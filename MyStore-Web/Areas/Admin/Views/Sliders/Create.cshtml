@@ -54,14 +54,18 @@
                 </div>
 
                 <div class="col-6">
-                    <label class="font-size-13 color-444">وضعیت نمایش</label>
-                    <div class="switch-box">
+                    <label class="font-size-13 color-444 d-block mb-10">وضعیت نمایش</label>
+
+                    <div class="switch-box" style="display:flex; align-items:center; gap:15px; padding-right:20px;">
                         <input type="checkbox" id="switch-active" asp-for="IsActive" />
+
                         <label for="switch-active" class="switch-label">
                             <span class="switch-btn"></span>
                         </label>
-                        <span class="margin-right-10" id="switch-text">غیرفعال</span>
+
+                        <span id="switch-text" class="font-size-13 color-444">غیرفعال</span>
                     </div>
+
                     <span asp-validation-for="IsActive" class="text-error font-size-12"></span>
                 </div>
             </div>
@@ -73,4 +77,3 @@
         </form>
     </div>
 </div>
-

@@ -17,6 +17,7 @@ builder.Services.AddDbContext<MyStoreDbContext>(options =>
 });
 builder.Services.AddAutoMapper(typeof(SliderProfile));
 builder.Services.AddScoped<ISliderServicess, SliderServicess>();
+builder.Services.AddScoped<IFileManager, FileManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

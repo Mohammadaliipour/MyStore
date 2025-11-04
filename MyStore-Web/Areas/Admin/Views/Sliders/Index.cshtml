@@ -60,8 +60,11 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ImageName)
-                    </td>
+                            <a href="~/images/posts/@item.ImageName" >
+                                <img src="~/images/posts/@item.ImageName"
+                                     style="width:200px; height:100px; object-fit:cover; border-radius:5px;" />
+                            </a>
+                        </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Startdate)
                     </td>

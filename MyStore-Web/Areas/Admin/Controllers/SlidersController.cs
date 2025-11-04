@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MyStore_Core.DTO;
 using MyStore_Core.Interfaces;
 using MyStore_Data.Entities;
 using MyStore_Web.Models.ViewModels;
@@ -27,7 +28,7 @@ namespace MyStore_Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var slierlistDto =  await _sliderServicess.GettAllSlider();
+            var slierlistDto = await _sliderServicess.GettAllSlider();
 
             var ListViewModel = slierlistDto.Select(dto => new SliderViewModel
             {
@@ -77,20 +78,26 @@ namespace MyStore_Web.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/Sliders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SliderId,DiscountTitle,Title,ImageName,Startdate,Enddate,IsActive")] Slider slider)
+        public async Task<IActionResult> Create([Bind("DiscountTitle,Title,ImageFile,Startdate,Enddate,IsActive")] SliderCreateViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            
+            var sliders = new SliderCreateDto()
             {
-                _context.Add(slider);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(slider);
+                DiscountTitle = viewModel.DiscountTitle,
+                ImageFile = viewModel.ImageFile,
+                EndDate = viewModel.Enddate,
+                IsActive = viewModel.IsActive,
+                Title = viewModel.Title,
+                StartDate = viewModel.Startdate
+            };
+           await _sliderServicess.CreateSlider(sliders);
+            
+
+        return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Admin/Sliders/Edit/5

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Services.Licensing;
 using MyStore_Core.DTO;
 using MyStore_Core.Interfaces;
+using MyStore_Core.Utilities;
 using MyStore_Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,45 +13,61 @@ using System.Threading.Tasks;
 
 namespace MyStore_Core.Servicess
 {
-    public class SliderServicess:ISliderServicess
+    public class SliderServicess : ISliderServicess
     {
         private readonly MyStoreDbContext _dbcontext;
         private readonly IMapper _mapper;
-        public SliderServicess(MyStoreDbContext dbcontext, IMapper mappe)
+        private readonly IFileManager _fileManager;
+        public SliderServicess(MyStoreDbContext dbcontext, IMapper mappe, IFileManager fileManager)
         {
             _dbcontext = dbcontext;
             _mapper = mappe;
+            _fileManager = fileManager;
         }
 
-        public async Task<List<SliderDto>> GettAllSlider() 
+        public async Task<List<SliderDto>> GettAllSlider()
         {
             var slider = await _dbcontext.Sliders.ToListAsync();
             if (slider == null)
                 return null;
             return _mapper.Map<List<SliderDto>>(slider);
-        
+
         }
 
 
-        public async Task <SliderDto> GetSliderDto(int id) 
+        public async Task<SliderDto> GetSliderDto(int id)
         {
 
-            var slider =await _dbcontext.Sliders.FirstOrDefaultAsync(p=>p.SliderId == id);
+            var slider = await _dbcontext.Sliders.FirstOrDefaultAsync(p => p.SliderId == id);
             if (slider == null)
                 return null;
 
             return _mapper.Map<SliderDto>(slider);
 
-        
-        
+
+
         }
 
-        public Task CreateSlider(SliderEditDto dto)
+        public async  Task CreateSlider(SliderCreateDto createDto)
         {
-            throw new NotImplementedException();
+           
+            var slider = new Slider()
+            {
+                DiscountTitle = createDto.DiscountTitle,
+                Enddate = createDto.EndDate,
+                IsActive = createDto.IsActive,
+                Startdate = createDto.StartDate,
+                Title = createDto.Title,
+            };
+            slider.ImageName=_fileManager.SaveFile(createDto.ImageFile,Directories.SliderImage);
+            if (createDto.ImageFile == null)
+                slider.ImageName = "";
+            await _dbcontext.Sliders.AddAsync(slider);
+          await  _dbcontext.SaveChangesAsync();
+            
         }
 
-        public Task EditSlider(SliderEditDto dto)
+        public Task EditSlider(SliderCreateDto dto)
         {
             throw new NotImplementedException();
         }

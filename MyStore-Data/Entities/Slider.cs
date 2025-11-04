@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyStore_Data.Entities;
 
@@ -11,6 +12,7 @@ public partial class Slider
 
     public string Title { get; set; } = null!;
 
+    [MaxLength(200)]
     public string ImageName { get; set; } = null!;
 
     public DateTime Startdate { get; set; }
