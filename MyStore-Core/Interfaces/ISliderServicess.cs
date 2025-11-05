@@ -10,9 +10,9 @@ namespace MyStore_Core.Interfaces
     public interface ISliderServicess
     {
 
-        Task<SliderDto> GetSliderDto(int id);
+        Task<SliderDto> GetSliderbyid(int id);
         Task<List<SliderDto>> GettAllSlider();
-        Task CreateSlider(SliderCreateDto dto);
-        Task EditSlider(SliderCreateDto dto);
+        Task CreateSlider(SlidereditDto dto);
+        Task EditSlider(SliderEditDto dto);
     }
 }

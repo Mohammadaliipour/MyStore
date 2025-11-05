@@ -11,7 +11,7 @@ namespace MyStore_Web.Models.ViewModels
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Title { get; set; } = null!;
 
-        [Display(Name ="تصویر")]
+        [Display(Name = "تصویر")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile ImageFile { get; set; }
     

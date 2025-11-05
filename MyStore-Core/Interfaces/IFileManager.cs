@@ -11,5 +11,6 @@ namespace MyStore_Core.Interfaces
     {
 
         string SaveFile(IFormFile file, string Savepath);
+        void DeleteFile(string fileName, string path);
     }
 }

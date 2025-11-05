@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +16,13 @@ namespace MyStore_Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class SlidersController : Controller
     {
-        private readonly MyStoreDbContext _context;
-        private readonly ISliderServicess _sliderServicess;
 
-        public SlidersController(MyStoreDbContext context, ISliderServicess sliderServicess)
+        private readonly ISliderServicess _sliderServicess;
+        private readonly IMapper _mapper;
+
+        public SlidersController(ISliderServicess sliderServicess, IMapper mapper)
         {
-            _context = context;
+            _mapper = mapper;
             _sliderServicess = sliderServicess;
         }
 
@@ -32,7 +34,7 @@ namespace MyStore_Web.Areas.Admin.Controllers
 
             var ListViewModel = slierlistDto.Select(dto => new SliderViewModel
             {
-                SliderId = dto.Id,
+                SliderId = dto.SliderId,
                 DiscountTitle = dto.DiscountTitle,
                 Title = dto.Title,
                 ImageName = dto.ImageName,
@@ -50,23 +52,13 @@ namespace MyStore_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var slider = await _sliderServicess.GetSliderDto((int)id);
+            var slider = await _sliderServicess.GetSliderbyid((int)id);
             if (slider == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new SliderViewModel()
-            {
-                DiscountTitle = slider.DiscountTitle,
-                Enddate = slider.EndDate,
-                ImageName = slider.ImageName,
-                SliderId = slider.Id,
-                Startdate = slider.StartDate,
-                IsActive = slider.IsActive,
-                Title = slider.Title,
-
-            };
+            var viewModel = _mapper.Map<SliderViewModel>(slider);
 
 
             return View(viewModel);
@@ -78,13 +70,11 @@ namespace MyStore_Web.Areas.Admin.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DiscountTitle,Title,ImageFile,Startdate,Enddate,IsActive")] SliderCreateViewModel viewModel)
         {
-            
-            var sliders = new SliderCreateDto()
+            var sliders = new SlidereditDto()
             {
                 DiscountTitle = viewModel.DiscountTitle,
                 ImageFile = viewModel.ImageFile,
@@ -93,99 +83,71 @@ namespace MyStore_Web.Areas.Admin.Controllers
                 Title = viewModel.Title,
                 StartDate = viewModel.Startdate
             };
-           await _sliderServicess.CreateSlider(sliders);
-            
-
-        return RedirectToAction(nameof(Index));
-
+            await _sliderServicess.CreateSlider(sliders);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Admin/Sliders/Edit/5
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var slider = await _context.Sliders.FindAsync(id);
-            if (slider == null)
+            var edit = await _sliderServicess.GetSliderbyid((int)id);
+            if (edit == null)
             {
                 return NotFound();
             }
-            return View(slider);
+            var editview = _mapper.Map<SliderEditViewModel>(edit);
+            return View(editview);
         }
 
-        // POST: Admin/Sliders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SliderId,DiscountTitle,Title,ImageName,Startdate,Enddate,IsActive")] Slider slider)
+        public async Task<IActionResult> Edit(int id, [Bind("SliderId,DiscountTitle,Title,Imagefile ,Startdate,Enddate,IsActive")] SliderEditViewModel slider)
         {
             if (id != slider.SliderId)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(slider);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SliderExists(slider.SliderId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(slider);
+            var sliderdto = _mapper.Map<SliderEditDto>(slider);
+            await _sliderServicess.EditSlider(sliderdto);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Admin/Sliders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var slider = await _context.Sliders
-                .FirstOrDefaultAsync(m => m.SliderId == id);
-            if (slider == null)
-            {
-                return NotFound();
-            }
-
-            return View(slider);
+            var slider = await _sliderServicess.GetSliderbyid(id);
+            var view = _mapper.Map<SliderViewModel>(slider);
+            return View(view);
         }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var slider = await _context.Sliders.FindAsync(id);
+        //    if (slider != null)
+        //    {
+        //        _context.Sliders.Remove(slider);
+        //    }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var slider = await _context.Sliders.FindAsync(id);
-            if (slider != null)
-            {
-                _context.Sliders.Remove(slider);
-            }
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
-        private bool SliderExists(int id)
-        {
-            return _context.Sliders.Any(e => e.SliderId == id);
-        }
+
+        //private bool SliderExists(int id)
+        //{
+        //    return _context.Sliders.Any(e => e.SliderId == id);
+        //    }
+        //}
     }
 }

@@ -4,7 +4,7 @@ namespace MyStore_Web.Models.ViewModels
 {
     public class SliderViewModel
     {
-        [Key] 
+        
         public int SliderId { get; set; }
 
         [Display(Name =" عنوان تخفیف")]

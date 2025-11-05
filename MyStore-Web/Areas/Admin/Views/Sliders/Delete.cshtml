@@ -1,57 +1,51 @@
-﻿@model MyStore_Data.Entities.Slider
+﻿@using MyStore_Web.Models.ViewModels
+@model SliderViewModel
 
-@{
-    ViewData["Title"] = "Delete";
-}
+<div class="main-content font-size-13">
+    <div class="tab__box">
+        <div class="tab__items">
+            <a asp-area="Admin" asp-controller="Sliders" asp-action="Index" class="tab__item">لیست اسلایدرها</a>
+            <a class="tab__item is-active">حذف اسلایدر</a>
+        </div>
+    </div>
 
-<h1>Delete</h1>
+    <div class="bg-white padding-50 border-radius-3"
+         style="max-width:1100px; margin:120px auto; text-align:center; box-shadow:0 0 12px rgba(0,0,0,.06);">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Slider</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DiscountTitle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DiscountTitle)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Startdate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Startdate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Enddate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Enddate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="SliderId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <h3 style="font-weight:600; color:#d9534f; margin-bottom:50px; font-size:19px;">
+            ⚠ آیا از حذف این اسلایدر مطمئن هستید؟
+        </h3>
+
+        <div class="row justify-content-center align-items-start">
+
+            <div class="col-6 text-right" style="line-height:38px; font-size:15px;">
+                <p><strong>عنوان تخفیف:</strong> @Model.DiscountTitle</p>
+                <p><strong>عنوان:</strong> @Model.Title</p>
+                <p><strong>تاریخ شروع:</strong> @Model.Startdate.ToString("yyyy-MM-dd")</p>
+                <p><strong>تاریخ پایان:</strong> @Model.Enddate.ToString("yyyy-MM-dd")</p>
+                <p><strong>وضعیت:</strong> @(Model.IsActive ? "فعال" : "غیرفعال")</p>
+            </div>
+
+            <div class="col-6 text-center">
+                <img src="/images/posts/@Model.ImageName"
+                     style="width:330px; height:220px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px rgba(0,0,0,.15);">
+            </div>
+
+        </div>
+
+        <form asp-area="Admin" asp-controller="Sliders" asp-action="Delete" method="post" style="margin-top:65px; margin-bottom:40px;">
+            <input type="hidden" asp-for="SliderId" />
+
+            <button asp-area="Admin" asp-controller="Sliders" asp-action="Delete"  type="submit"
+                    style="background:#d9534f; color:white; padding:13px 40px; border-radius:6px; font-size:15px; margin-left:15px;">
+                ✅ حذف اسلایدر
+            </button>
+
+            <a asp-area="Admin" asp-controller="Sliders" asp-action="Index"
+               style="background:#e2e2e2; color:#444; padding:13px 40px; border-radius:6px; font-size:15px;">
+                بازگشت
+            </a>
+        </form>
+
+    </div>
 </div>

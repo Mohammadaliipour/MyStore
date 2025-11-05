@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyStore_Core.DTO
 {
-    public class SliderCreateDto
+    public class SlidereditDto
     {
         public string? DiscountTitle { get; set; }
         public string Title { get; set; }

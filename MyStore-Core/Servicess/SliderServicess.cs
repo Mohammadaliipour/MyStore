@@ -35,7 +35,7 @@ namespace MyStore_Core.Servicess
         }
 
 
-        public async Task<SliderDto> GetSliderDto(int id)
+        public async Task<SliderDto> GetSliderbyid(int id)
         {
 
             var slider = await _dbcontext.Sliders.FirstOrDefaultAsync(p => p.SliderId == id);
@@ -48,7 +48,7 @@ namespace MyStore_Core.Servicess
 
         }
 
-        public async  Task CreateSlider(SliderCreateDto createDto)
+        public async  Task CreateSlider(SlidereditDto createDto)
         {
            
             var slider = new Slider()
@@ -66,10 +66,19 @@ namespace MyStore_Core.Servicess
           await  _dbcontext.SaveChangesAsync();
             
         }
-
-        public Task EditSlider(SliderCreateDto dto)
+        public async Task EditSlider(SliderEditDto dto)
         {
-            throw new NotImplementedException();
+
+            
+           var def = _dbcontext.Sliders.FirstOrDefault(p => p.SliderId == dto.SliderId);
+            _mapper.Map(dto,def);
+            var oldimage=def.ImageName;        
+            if (dto.ImageFile != null)
+            def.ImageName = _fileManager.SaveFile(dto.ImageFile, Directories.SliderImage);
+            _dbcontext.SaveChanges();
+            if (dto.ImageFile != null)
+                _fileManager.DeleteFile(oldimage,Directories.SliderImage);
+                      
         }
     }
 }

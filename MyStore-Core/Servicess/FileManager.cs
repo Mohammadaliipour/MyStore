@@ -10,7 +10,15 @@ namespace MyStore_Core.Servicess
 {
     public class FileManager : IFileManager
     {
-       public string SaveFile(IFormFile File,string Savepath) 
+
+        public void DeleteFile(string fileName, string path)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), path, fileName);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+
+        public string SaveFile(IFormFile File,string Savepath) 
         {
         
         if (File == null) throw new ArgumentNullException("file is null");

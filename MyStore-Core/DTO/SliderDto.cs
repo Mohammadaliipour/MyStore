@@ -8,7 +8,7 @@ namespace MyStore_Core.DTO
 {
     public class SliderDto
     {
-        public int Id { get; set; }
+        public int SliderId { get; set; }
         public string? DiscountTitle { get; set; }
         public string Title { get; set; }
         public string ImageName { get; set; }

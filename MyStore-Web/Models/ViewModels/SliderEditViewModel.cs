@@ -4,7 +4,6 @@ namespace MyStore_Web.Models.ViewModels
 {
     public class SliderEditViewModel
     {
-        [Key]
         public int SliderId { get; set; }
 
         [Display(Name = " عنوان تخفیف")]
@@ -13,7 +12,7 @@ namespace MyStore_Web.Models.ViewModels
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Title { get; set; } = null!;
 
-        public string ImageName { get; set; } = null!;
+        public IFormFile? Imagefile { get; set; } = null!;
 
 
         [Display(Name = "تاریخ شروع")]
@@ -24,7 +23,6 @@ namespace MyStore_Web.Models.ViewModels
         [Display(Name = "تاریخ پایان")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-
         public DateTime Enddate { get; set; }
 
 

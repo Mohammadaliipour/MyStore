@@ -1,59 +1,81 @@
-﻿@model MyStore_Data.Entities.Slider
+﻿@using MyStore_Web.Models.ViewModels
+@model SliderEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "ویرایش اسلایدر";
 }
 
-<h1>Edit</h1>
+<div class="main-content font-size-13">
+    <div class="tab__box">
+        <div class="tab__items">
+            <a asp-area="Admin" asp-controller="Sliders" asp-action="Index" class="tab__item">لیست اسلایدرها</a>
+            <a class="tab__item is-active">ویرایش اسلایدر</a>
+        </div>
+    </div>
 
-<h4>Slider</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="bg-white padding-30 border-radius-3">
+        <form asp-area="Admin" asp-controller="Sliders" asp-action="Edit" method="post" enctype="multipart/form-data" class="width-100">
             <input type="hidden" asp-for="SliderId" />
-            <div class="form-group">
-                <label asp-for="DiscountTitle" class="control-label"></label>
-                <input asp-for="DiscountTitle" class="form-control" />
-                <span asp-validation-for="DiscountTitle" class="text-danger"></span>
+            <div class="row margin-bottom-25">
+                <div class="col-6">
+                    <label asp-for="DiscountTitle" class="font-size-13 color-444"></label>
+                    <input asp-for="DiscountTitle" class="text width-100" style="height:36px;" placeholder="مثلاً تخفیف تابستانه" />
+                    <span asp-validation-for="DiscountTitle" class="text-error font-size-12"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Title" class="font-size-13 color-444"></label>
+                    <input asp-for="Title" class="text width-100" style="height:36px;" placeholder="عنوان اسلاید" />
+                    <span asp-validation-for="Title" class="text-error font-size-12"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+
+            <div class="row margin-bottom-25">
+                <div class="col-6">
+                    <label asp-for="Startdate" class="font-size-13 color-444"></label>
+                    <input asp-for="Startdate" type="date" asp-format="{0:yyyy-MM-dd}" class="text width-100" style="height:36px;" />
+                    <span asp-validation-for="Startdate" class="text-error font-size-12"></span>
+                </div>
+                <div class="col-6">
+                    <label asp-for="Enddate" class="font-size-13 color-444"></label>
+                    <input asp-for="Enddate" type="date" asp-format="{0:yyyy-MM-dd}" class="text width-100" style="height:36px;" />
+                    <span asp-validation-for="Enddate" class="text-error font-size-12"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" class="form-control" />
-                <span asp-validation-for="ImageName" class="text-danger"></span>
+
+            <div class="row margin-bottom-25">
+                <div class="col-6">
+                    <label asp-for="Imagefile" class="font-size-13 color-444">تصویر اسلاید</label>
+                    <div class="file-upload">
+                        <div class="i-file-upload">
+                            <span>انتخاب تصویر</span>
+                            <input asp-for="Imagefile" type="file" />
+                        </div>
+                       <span asp-validation-for="Imagefile" class="text-error font-size-12"></span> 
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label class="font-size-13 color-444 d-block mb-10">وضعیت نمایش</label>
+
+                    <div class="switch-box" style="display:flex; align-items:center; gap:15px; padding-right:20px;">
+                        <input type="checkbox" id="switch-active" asp-for="IsActive" />
+
+                        <label for="switch-active" class="switch-label">
+                            <span class="switch-btn"></span>
+                        </label>
+
+                        <span id="switch-text" class="font-size-13 color-444">غیرفعال</span>
+                    </div>
+
+                    <span asp-validation-for="IsActive" class="text-error font-size-12"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Startdate" class="control-label"></label>
-                <input asp-for="Startdate" class="form-control" />
-                <span asp-validation-for="Startdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Enddate" class="control-label"></label>
-                <input asp-for="Enddate" class="form-control" />
-                <span asp-validation-for="Enddate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="text-center margin-top-40">
+                <button   type="submit" class="btn btn-netcopy_net margin-left-10">ویرایش اسلاید</button>
+                <a asp-area="Admin" asp-controller="Sliders" asp-action="Index" class="btn bg-e2e2e2 color-444">بازگشت</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
