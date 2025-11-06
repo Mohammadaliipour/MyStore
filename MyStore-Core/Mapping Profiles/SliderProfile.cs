@@ -15,6 +15,7 @@ namespace MyStore_Core.Mapping_Profiles
         {
             CreateMap<Slider,SliderDto>().ReverseMap();
             CreateMap<SliderEditDto, Slider>().ReverseMap();
+            CreateMap<SliderCreateDto, Slider>().ReverseMap();
             
            
             

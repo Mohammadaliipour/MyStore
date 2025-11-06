@@ -74,15 +74,9 @@ namespace MyStore_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DiscountTitle,Title,ImageFile,Startdate,Enddate,IsActive")] SliderCreateViewModel viewModel)
         {
-            var sliders = new SlidereditDto()
-            {
-                DiscountTitle = viewModel.DiscountTitle,
-                ImageFile = viewModel.ImageFile,
-                EndDate = viewModel.Enddate,
-                IsActive = viewModel.IsActive,
-                Title = viewModel.Title,
-                StartDate = viewModel.Startdate
-            };
+           
+
+           var sliders= _mapper.Map<SliderCreateDto>(viewModel);
             await _sliderServicess.CreateSlider(sliders);
             return RedirectToAction(nameof(Index));
         }
@@ -128,19 +122,15 @@ namespace MyStore_Web.Areas.Admin.Controllers
             var view = _mapper.Map<SliderViewModel>(slider);
             return View(view);
         }
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var slider = await _context.Sliders.FindAsync(id);
-        //    if (slider != null)
-        //    {
-        //        _context.Sliders.Remove(slider);
-        //    }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+      
+          await _sliderServicess.DeleteSlider(id);
 
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
 
 
 

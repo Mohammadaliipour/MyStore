@@ -48,17 +48,10 @@ namespace MyStore_Core.Servicess
 
         }
 
-        public async  Task CreateSlider(SlidereditDto createDto)
+        public async  Task CreateSlider(SliderCreateDto createDto)
         {
            
-            var slider = new Slider()
-            {
-                DiscountTitle = createDto.DiscountTitle,
-                Enddate = createDto.EndDate,
-                IsActive = createDto.IsActive,
-                Startdate = createDto.StartDate,
-                Title = createDto.Title,
-            };
+            var slider=_mapper.Map<Slider>(createDto);
             slider.ImageName=_fileManager.SaveFile(createDto.ImageFile,Directories.SliderImage);
             if (createDto.ImageFile == null)
                 slider.ImageName = "";
@@ -67,9 +60,7 @@ namespace MyStore_Core.Servicess
             
         }
         public async Task EditSlider(SliderEditDto dto)
-        {
-
-            
+        {    
            var def = _dbcontext.Sliders.FirstOrDefault(p => p.SliderId == dto.SliderId);
             _mapper.Map(dto,def);
             var oldimage=def.ImageName;        
@@ -79,6 +70,16 @@ namespace MyStore_Core.Servicess
             if (dto.ImageFile != null)
                 _fileManager.DeleteFile(oldimage,Directories.SliderImage);
                       
+        }
+
+        public async Task DeleteSlider(int id)
+        {
+            var deletfile=_dbcontext.Sliders.FirstOrDefault(s => s.SliderId == id);
+            if (deletfile != null)
+            {
+                _dbcontext.Remove(deletfile);
+                _dbcontext.SaveChanges() ;
+            }
         }
     }
 }

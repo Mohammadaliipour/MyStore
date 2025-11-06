@@ -10,30 +10,30 @@
     </div>
 
     <div class="bg-white padding-50 border-radius-3"
-         style="max-width:1100px; margin:120px auto; text-align:center; box-shadow:0 0 12px rgba(0,0,0,.06);">
+         style="max-width:1500px; margin:40px auto; text-align:center; box-shadow:0 0 12px rgba(0,0,0,.06);">
 
-        <h3 style="font-weight:600; color:#d9534f; margin-bottom:50px; font-size:19px;">
+        <h3 style="font-weight:600; color:#d9534f; margin:60px; font-size:19px;">
             ⚠ آیا از حذف این اسلایدر مطمئن هستید؟
         </h3>
 
         <div class="row justify-content-center align-items-start">
 
-            <div class="col-6 text-right" style="line-height:38px; font-size:15px;">
+            <div class="col-6 text-right" style="line-height:38px; font-size:18px;">
                 <p><strong>عنوان تخفیف:</strong> @Model.DiscountTitle</p>
-                <p><strong>عنوان:</strong> @Model.Title</p>
-                <p><strong>تاریخ شروع:</strong> @Model.Startdate.ToString("yyyy-MM-dd")</p>
-                <p><strong>تاریخ پایان:</strong> @Model.Enddate.ToString("yyyy-MM-dd")</p>
-                <p><strong>وضعیت:</strong> @(Model.IsActive ? "فعال" : "غیرفعال")</p>
+                <p><strong>عنوان: </strong> @Model.Title</p>
+                <p><strong>تاریخ شروع: </strong> @Model.Startdate.ToString("yyyy-MM-dd")</p>
+                <p><strong>تاریخ پایان: </strong> @Model.Enddate.ToString("yyyy-MM-dd")</p>
+                <p><strong>وضعیت: </strong> @(Model.IsActive ? "فعال" : "غیرفعال")</p>
             </div>
 
             <div class="col-6 text-center">
                 <img src="/images/posts/@Model.ImageName"
-                     style="width:330px; height:220px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px rgba(0,0,0,.15);">
+                     style="width:400px; height:220px; object-fit:cover; border-radius:8px; box-shadow:0 0 8px rgba(0,0,0,.15);">
             </div>
 
         </div>
 
-        <form asp-area="Admin" asp-controller="Sliders" asp-action="Delete" method="post" style="margin-top:65px; margin-bottom:40px;">
+        <form asp-area="Admin" asp-controller="Sliders" asp-action="Delete" method="post" style="margin-top:60px; margin-bottom:70px;">
             <input type="hidden" asp-for="SliderId" />
 
             <button asp-area="Admin" asp-controller="Sliders" asp-action="Delete"  type="submit"
