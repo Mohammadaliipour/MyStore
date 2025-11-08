@@ -45,40 +45,39 @@ namespace MyStore_Core.Servicess
             return _mapper.Map<SliderDto>(slider);
 
 
-
         }
 
-        public async  Task CreateSlider(SliderCreateDto createDto)
+        public async Task CreateSlider(SliderCreateDto createDto)
         {
-           
-            var slider=_mapper.Map<Slider>(createDto);
-            slider.ImageName=_fileManager.SaveFile(createDto.ImageFile,Directories.SliderImage);
+
+            var slider = _mapper.Map<Slider>(createDto);
+            slider.ImageName = _fileManager.SaveFile(createDto.ImageFile, Directories.SliderImage);
             if (createDto.ImageFile == null)
                 slider.ImageName = "";
             await _dbcontext.Sliders.AddAsync(slider);
-          await  _dbcontext.SaveChangesAsync();
-            
+            await _dbcontext.SaveChangesAsync();
+
         }
         public async Task EditSlider(SliderEditDto dto)
-        {    
-           var def = _dbcontext.Sliders.FirstOrDefault(p => p.SliderId == dto.SliderId);
-            _mapper.Map(dto,def);
-            var oldimage=def.ImageName;        
+        {
+            var def = await _dbcontext.Sliders.FirstOrDefaultAsync(p => p.SliderId == dto.SliderId);
+            _mapper.Map(dto, def);
+            var oldimage = def.ImageName;
             if (dto.ImageFile != null)
-            def.ImageName = _fileManager.SaveFile(dto.ImageFile, Directories.SliderImage);
+                def.ImageName = _fileManager.SaveFile(dto.ImageFile, Directories.SliderImage);
             _dbcontext.SaveChanges();
             if (dto.ImageFile != null)
-                _fileManager.DeleteFile(oldimage,Directories.SliderImage);
-                      
+                _fileManager.DeleteFile(oldimage, Directories.SliderImage);
+
         }
 
         public async Task DeleteSlider(int id)
         {
-            var deletfile=_dbcontext.Sliders.FirstOrDefault(s => s.SliderId == id);
+            var deletfile = await _dbcontext.Sliders.FirstOrDefaultAsync(s => s.SliderId == id);
             if (deletfile != null)
             {
                 _dbcontext.Remove(deletfile);
-                _dbcontext.SaveChanges() ;
+                await _dbcontext.SaveChangesAsync();
             }
         }
     }
