@@ -74,9 +74,9 @@ namespace MyStore_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DiscountTitle,Title,ImageFile,Startdate,Enddate,IsActive")] SliderCreateViewModel viewModel)
         {
-           
 
-           var sliders= _mapper.Map<SliderCreateDto>(viewModel);
+
+            var sliders = _mapper.Map<SliderCreateDto>(viewModel);
             await _sliderServicess.CreateSlider(sliders);
             return RedirectToAction(nameof(Index));
         }
@@ -126,8 +126,8 @@ namespace MyStore_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-      
-          await _sliderServicess.DeleteSlider(id);
+
+            await _sliderServicess.DeleteSlider(id);
 
             return RedirectToAction(nameof(Index));
         }

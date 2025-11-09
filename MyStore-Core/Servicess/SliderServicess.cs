@@ -80,5 +80,15 @@ namespace MyStore_Core.Servicess
                 await _dbcontext.SaveChangesAsync();
             }
         }
+
+        public async Task<List<SliderDto>> GetfilterSlider()
+        {
+            var Time = DateTime.Today;
+            var filter = await _dbcontext.Sliders.Where(s => s.IsActive
+                                                      && s.Startdate <= Time
+                                                      && s.Enddate.AddDays(1) > Time).ToListAsync();
+
+            return _mapper.Map<List<SliderDto>>(filter);
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace MyStore_Core.Interfaces
         Task CreateSlider(SliderCreateDto dto);
         Task EditSlider(SliderEditDto dto);
         Task DeleteSlider(int id);
+        Task <List<SliderDto>> GetfilterSlider();
     }
 }

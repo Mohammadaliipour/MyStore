@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace MyStore_Core.Servicess
 {
@@ -18,22 +21,26 @@ namespace MyStore_Core.Servicess
                 File.Delete(filePath);
         }
 
-        public string SaveFile(IFormFile File,string Savepath) 
+        public string SaveFile(IFormFile File, string Savepath)
         {
-        
-        if (File == null) throw new ArgumentNullException("file is null");
+
+            if (File == null) throw new ArgumentNullException("file is null");
 
             var Filename = $"{Guid.NewGuid()}{File.FileName}";
-            var folderpath=Path.Combine(Directory.GetCurrentDirectory(), Savepath.Replace("/","\\"));
-            if (!Directory.Exists(folderpath)) 
+            var folderpath = Path.Combine(Directory.GetCurrentDirectory(), Savepath.Replace("/", "\\"));
+            if (!Directory.Exists(folderpath))
             {
-            Directory.CreateDirectory(folderpath);
+                Directory.CreateDirectory(folderpath);
             }
-            var Fullpath=Path.Combine(folderpath,Filename);
-            using var stream=new FileStream(Fullpath, FileMode.Create);
-            File.CopyTo(stream);
-            return Filename;
-       
+            var Fullpath = Path.Combine(folderpath, Filename);
+            using (Image image = Image.Load(File.OpenReadStream()))
+            {
+                image.Mutate(x => x.Resize(1920, 600));
+
+                image.Save(Fullpath);
+
+                return Filename;
+            }
         }
 
     }
