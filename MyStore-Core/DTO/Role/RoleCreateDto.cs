@@ -8,5 +8,12 @@ namespace MyStore_Core.DTO.Role
 {
     public class RoleCreateDto
     {
+
+        public int Roleid { get; set; }
+
+        public string RoleTitle { get; set; } = null!;
+
+        public string RoleName { get; set; } = null!;
+
     }
 }

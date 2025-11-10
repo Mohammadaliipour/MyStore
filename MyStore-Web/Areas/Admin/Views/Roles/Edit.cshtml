@@ -1,0 +1,52 @@
+﻿@model MyStore_Web.Models.ViewModels.Role.RoleEditViewModel
+@{
+    ViewData["Title"] = "ایجاد نقش جدید";
+}
+
+<div class="main-content font-size-13">
+
+    <div class="tab__box">
+        <div class="tab__items">
+            <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="tab__item">لیست نقش‌ها</a>
+            <a class="tab__item is-active">ویرایش نقش </a>
+        </div>
+    </div>
+
+
+    <div class="bg-white padding-30 border-radius-3" style="max-width:650px; margin:auto; box-shadow:0 0 12px rgba(0,0,0,.05);">
+        <h3 class="text-center margin-top-20"
+            style="font-size:20px; font-weight:600; color:#444; margin-bottom:15px;">
+            ویرایش نقش
+        </h3>
+
+        <form asp-area="Admin" asp-controller="Roles" asp-action="Edit" method="post" class="width-100">
+
+            <div>                
+                <input asp-for="Roleid" type="hidden"/>
+            </div>
+
+            <!-- Role Title -->
+            <div>
+                <label asp-for="RoleTitle" class="font-size-13 color-444 font-weight-bold"></label>
+                <input asp-for="RoleTitle" class="text width-100" style="height:36px; margin-top:12px;" />
+                <span asp-validation-for="RoleTitle" class="text-error font-size-12"></span>
+            </div>
+
+            <!-- Role Name -->
+            <div>
+                <label asp-for="RoleName" class="font-size-13 color-444"></label>
+                <input asp-for="RoleName" class="text width-100" style="height:36px;margin-top:12px;"  />
+                <span asp-validation-for="RoleName" class="text-error font-size-12"></span>
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="text-center margin-top-40">
+                <button type="submit" class="btn btn-netcopy_net margin-left-10">ویرایش نقش</button>
+                <a asp-area="Admin" asp-controller="Roles" asp-action="Index" class="btn bg-e2e2e2 color-444">بازگشت</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

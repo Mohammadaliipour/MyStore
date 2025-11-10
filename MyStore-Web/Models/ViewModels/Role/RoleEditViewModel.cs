@@ -5,6 +5,8 @@ namespace MyStore_Web.Models.ViewModels.Role
     public class RoleEditViewModel
     {
 
+        public int Roleid { get; set; }
+
         [Display(Name = "")]
         [Required(ErrorMessage = "لطفا {0}را وارد کنید")]
         public string RoleTitle { get; set; } = null!;

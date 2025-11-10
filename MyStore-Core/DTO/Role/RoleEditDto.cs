@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyStore_Core.DTO.Role
 {
-    public class RoleDto
+    public class RoleEditDto
     {
         public int Roleid { get; set; }
 

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<MyStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("connectionname"));
 });
 builder.Services.AddAutoMapper(typeof(SliderProfile));
+builder.Services.AddAutoMapper(typeof(RoleProfile));
 builder.Services.AddAutoMapper(typeof(SliderviewProfile));
 builder.Services.AddScoped<ISliderServicess, SliderServicess>();
 builder.Services.AddScoped<IFileManager, FileManager>();
