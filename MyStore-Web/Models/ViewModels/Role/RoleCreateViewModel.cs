@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyStore_Web.Models.ViewModels.Role
 {
-    public class RoleCreatedto
+    public class RoleCreateViewModel
     {
         [Display(Name ="آیدی نقش")]
         [Required(ErrorMessage ="لطفا {0}را وارد کنید")]

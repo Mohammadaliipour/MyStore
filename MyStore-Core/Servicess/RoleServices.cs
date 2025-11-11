@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.ModelBinding;
 
 namespace MyStore_Core.Servicess
 {
@@ -22,7 +23,7 @@ namespace MyStore_Core.Servicess
         }
         public async Task Creatrole(RoleCreateDto role)
         {
-            var newrole = _mapper.Map<RoleCreateDto>(role);
+            var newrole = _mapper.Map<Role>(role);
             await _dbContext.AddAsync(newrole);
             await _dbContext.SaveChangesAsync();
 
@@ -30,10 +31,11 @@ namespace MyStore_Core.Servicess
 
         public async Task DeleteRole(int id)
         {
-            var role = _dbContext.Roles.FirstOrDefaultAsync(s => s.Roleid == id);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(s => s.Roleid == id);
 
             if (role != null)
             {
+
                 _dbContext.Remove(role);
                 await _dbContext.SaveChangesAsync();
             }
@@ -41,7 +43,7 @@ namespace MyStore_Core.Servicess
 
         public async Task EditRole(RoleEditDto editDto)
         {
-            var role = _dbContext.Roles.Where(s => s.Roleid == editDto.Roleid);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Roleid == editDto.Roleid);
             _mapper.Map(editDto, role);
             await _dbContext.SaveChangesAsync();
         }
@@ -53,11 +55,13 @@ namespace MyStore_Core.Servicess
             return dto;
 
         }
-        public async Task<RoleDto> GetoneRole(int id) 
-        
+        public async Task<RoleDto> GetoneRole(int id)
+
         {
-           return _mapper.Map<RoleDto>( await _dbContext.Roles.FirstOrDefaultAsync(x=>x.Roleid==id));
-        
+            var result = await _dbContext.Roles.FirstOrDefaultAsync(x => x.Roleid == id);
+            var dto = _mapper.Map<RoleDto>(result);
+            return dto;
+
         }
     }
 }

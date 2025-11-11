@@ -1,4 +1,4 @@
-﻿@model MyStore_Web.Models.ViewModels.Role.RoleEditViewModel
+﻿@model MyStore_Web.Models.ViewModels.Role.RoleviewModel
 @{
     ViewData["Title"] = "ایجاد نقش جدید";
 }
@@ -19,7 +19,7 @@
             ⚠ آیا از حذف این اسلایدر مطمئن هستید؟
         </h3>
 
-        <form asp-area="Admin" asp-controller="Roles" asp-action="ِDelete" method="post" class="width-100">
+        <form asp-area="Admin" asp-controller="Roles" asp-action="Delete" method="post" class="width-100">
 
             <div>
                 <input asp-for="Roleid" type="hidden" />

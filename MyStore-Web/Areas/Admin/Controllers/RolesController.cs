@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MyStore_Core.DTO.Role;
 using MyStore_Core.Interfaces;
 using MyStore_Data.Entities;
@@ -43,8 +44,15 @@ namespace MyStore_Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Roleid,RoleTitle,RoleName")] RoleCreatedto role)
+        public async Task<IActionResult> Create([Bind("Roleid,RoleTitle,RoleName")] RoleCreateViewModel role)
         {
+
+            var Isvalid = await _roleServices.GetoneRole(role.Roleid);
+            if (Isvalid != null)
+            {
+                ModelState.AddModelError("RoleId", "⚠ نقش با این شناسه قبلاً ثبت شده است");
+                return View(role);
+            }
             var dto = _mapper.Map<RoleCreateDto>(role);
             await _roleServices.Creatrole(dto);
             return RedirectToAction(nameof(Index));
@@ -60,7 +68,7 @@ namespace MyStore_Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Roleid,RoleTitle,RoleName")] Role role)
+        public async Task<IActionResult> Edit( [Bind("Roleid,RoleTitle,RoleName")] RoleviewModel role)
         {
             var dto = _mapper.Map<RoleEditDto>(role);
             await _roleServices.EditRole(dto);
@@ -71,7 +79,7 @@ namespace MyStore_Web.Areas.Admin.Controllers
         // GET: Admin/Roles/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-           var role=await _roleServices.GetoneRole(id);
+            var role = await _roleServices.GetoneRole(id);
             var vm = _mapper.Map<RoleviewModel>(role);
             return View(vm);
         }
@@ -81,9 +89,8 @@ namespace MyStore_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var role = await _roleServices.GetoneRole(id);
-            var dto = _mapper.Map<RoleviewModel>(role);
-            return View(dto);
+            await _roleServices.DeleteRole(id);
+            return RedirectToAction(nameof(Index));
         }
 
         private bool RoleExists(int id)

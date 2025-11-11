@@ -15,6 +15,7 @@ namespace MyStore_Core.Mapping_Profiles
         {
             CreateMap<Role,RoleDto>().ReverseMap();
             CreateMap<Role,RoleCreateDto>().ReverseMap();
+            CreateMap<Role, RoleEditDto>().ReverseMap();
         }
 
     }

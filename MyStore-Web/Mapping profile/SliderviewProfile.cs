@@ -12,8 +12,8 @@ namespace MyStore_Web.Mapping_profile
             CreateMap<SliderEditViewModel, SliderEditDto>().ReverseMap();
             CreateMap<SliderEditViewModel,SliderDto>().ReverseMap();
             CreateMap<SliderViewModel,SliderDto>().ReverseMap();
+            CreateMap<SliderDto, SliderSimpleviewModel>();
             CreateMap<SliderCreateDto,SliderCreateViewModel>().ReverseMap();
-            CreateMap<SliderSimpleviewModel,SliderDto>().ReverseMap();
         }
 
     }

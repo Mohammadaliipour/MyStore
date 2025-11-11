@@ -1,41 +1,70 @@
-﻿@model IEnumerable<MyStore_Data.Entities.Role>
-
+﻿@using MyStore_Web.Models.ViewModels.Role
+@model List<RoleviewModel>
 @{
     ViewData["Title"] = "Index";
 }
+@* 
+<div class="breadcrumb">
+    <ul>
+        <li>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">پیشخوان</a>
+        </li>
+        <li>
+            <a asp-area="Admin" asp-controller="Sliders" asp-action="Index" class="is-active">اسلایدشو</a>
+        </li>
+    </ul>
+</div> *@
+<div class="main-content font-size-13">
+    <div class="tab__box">
+        <div class="tab__items">
+            <a class="tab__item is-active">لیست نقش ها</a>
+            <a class="tab__item " asp-area="Admin" asp-controller="Roles" asp-action="Create">ایجاد نقش جدید</a>
 
-<h1>Index</h1>
+        </div>
+    </div>
+    <div class="table__box">
+        <table class="table">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Roleid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Roleid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Roleid">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <thead role="rowgroup">
+                <tr role="row" class="title-row">
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Roleid)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().RoleTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().RoleName)
+                    </th>
+                    <th>
+                        عملیات
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr role="row" class="">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Roleid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleTitle)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        
+                        <td>
+                            <a asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@item.Roleid" class="item-delete mlg-15" title="حذف"></a>
+
+                            <a asp-area="Admin" asp-controller="Roles" asp-action="Edit" asp-route-id="@item.Roleid" class="item-edit" title="ویرایش"></a>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
