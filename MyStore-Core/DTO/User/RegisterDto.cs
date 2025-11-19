@@ -16,5 +16,9 @@ namespace MyStore_Core.DTO.User
 
         public string Password { get; set; } = null!;
 
+        public bool IsActive { get; set; }=true;
+
+        public int RoleId { get; set; } = 3;
+
     }
 }

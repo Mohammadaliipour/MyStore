@@ -13,12 +13,15 @@ builder.Services.AddDbContext<MyStoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connectionname"));
 });
-builder.Services.AddAutoMapper(typeof(SliderProfile).Assembly);
-builder.Services.AddAutoMapper(typeof(SliderviewProfile).Assembly);
+//builder.Services.AddAutoMapper(typeof(SliderProfile).Assembly);
+//builder.Services.AddAutoMapper(typeof(SliderviewProfile).Assembly);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddScoped<ISliderServicess, SliderServicess>();
 builder.Services.AddScoped<IRoleServices, RoleServices>();
 builder.Services.AddScoped<IFileManager, FileManager>();
+builder.Services.AddScoped<IUserService, UserService>();    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
