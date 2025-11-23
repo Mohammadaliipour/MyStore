@@ -10,5 +10,6 @@ namespace MyStore_Core.Interfaces
     public interface IUserService
     {
         Task Createuser(RegisterDto register);
+        Task<bool> EmailExists(string email);
     }
 }

@@ -1,0 +1,42 @@
+﻿@using MyStore_Web.Models.ViewModels.User
+@model RegisterViewModel
+<div class="container">
+    <div class="card verify-card p-4 text-center bg-white">
+
+        <h3 class="font-weight-bold mb-3"> @Model.UserName عزیز ثبت‌نام شما با موفقیت انجام شد 🎉</h3>
+        <p class="text-secondary mb-4">
+            لطفاً برای فعال‌سازی حساب کاربری، وارد ایمیلی که ثبت کرده‌اید شوید و روی لینک تأیید کلیک کنید.
+        </p>
+        <div class="email-box mb-4">@Model.Email</div>
+
+        <a href="#" class="btn btn-primary btn-block py-2 font-weight-bold">
+            ارسال مجدد لینک تأیید
+        </a>
+
+        <p class="text-muted mt-3" style="font-size:14px;">
+            اگر ایمیل را دریافت نکردید، پوشه Spam / Junk را بررسی کنید.
+        </p>
+
+    </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #f5f7fa, #e4ecf5);
+    }
+
+    .verify-card {
+        max-width: 500px;
+        margin: 80px auto;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    .email-box {
+        background: #f1f4f8;
+        border: 1px solid #d9e2ec;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+</style>

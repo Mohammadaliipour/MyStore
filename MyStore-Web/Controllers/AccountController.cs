@@ -26,10 +26,27 @@ namespace MyStore_Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("UserName", "Email", "Password", "RePassword")] RegisterViewModel viewModel)
         {
+            if (!await _userService.EmailExists(viewModel.Email)) 
+            {
             var map=_mapper.Map<RegisterDto>(viewModel);
             await _userService.Createuser(map);
-            return RedirectToAction("Index");
+            return View("verifyemail",viewModel);
+            
+            }
+            else {
 
+                ModelState.AddModelError("Email", "این ایمیل قبلا ثبت شده است!!!");
+                return View(viewModel);
+                
+            
+            }
         }
+        public IActionResult verifyemail(RegisterViewModel viewModel)
+        {
+            return View(viewModel);
+        }
+
+
     }
+   
 }
